@@ -1,0 +1,10 @@
+ALTER TABLE "Record" ADD COLUMN "groupId" TEXT, ADD COLUMN "groupSize" INTEGER;
+ALTER TABLE "Record" ADD CONSTRAINT "Record_groupId_clientId_fkey" FOREIGN KEY ("groupId", "clientId") REFERENCES "Record"("id", "clientId") ON DELETE RESTRICT ON UPDATE CASCADE;
+CREATE INDEX "Record_clientId_groupId_idx" ON "Record"("clientId", "groupId");
+ALTER TABLE "Record" ADD CONSTRAINT "Record_groupSize_positive" CHECK ("groupSize" IS NULL OR "groupSize" > 0);
+ALTER TABLE "ControlDeployment" ADD COLUMN "coveredCount" INTEGER;
+ALTER TABLE "ControlDeployment" ADD CONSTRAINT "ControlDeployment_coveredCount_nonnegative" CHECK ("coveredCount" IS NULL OR "coveredCount" >= 0);
+ALTER TABLE "Record" DROP CONSTRAINT "Record_asset_type_check";
+ALTER TABLE "Record" ADD CONSTRAINT "Record_asset_type_check" CHECK ((kind='assets' AND "assetType" IS NOT NULL AND "assetType" IN ('server','endpoint','endpoint_group','network','identity','identity_group','firewall','network_device','cloud','web','application','database','other')) OR (kind<>'assets' AND "assetType" IS NULL));
+ALTER TABLE "Record" ADD CONSTRAINT "Record_group_shape_check" CHECK (CASE WHEN "assetType" IN ('endpoint_group','identity_group') THEN "groupSize" IS NOT NULL AND "groupId" IS NULL ELSE "groupSize" IS NULL END);
+ALTER TABLE "Record" ADD CONSTRAINT "Record_group_not_self" CHECK ("groupId" IS NULL OR "groupId" <> id);

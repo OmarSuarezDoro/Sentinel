@@ -1,0 +1,172 @@
+/**
+ * @file: asset-groups.css
+ * @description: Grupos de inventario y resumen de tareas por criticidad
+ * @author: omar.suarez@alturanetgroup.com
+ * @version: 1.0.0
+ * Copyright (c) 2026 Alturanet Group S.L. Todos los derechos reservados.
+ * Queda prohibida la reproducción total o parcial sin autorización previa.
+ */
+@layer components {
+  .group-members {
+    margin-bottom: 24px;
+  }
+  .group-members h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .group-member-list > div {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--line);
+  }
+  .group-member-list .row-title {
+    text-align: left;
+    overflow-wrap: anywhere;
+  }
+  .group-member-list .secondary {
+    flex-shrink: 0;
+  }
+  .group-attach {
+    padding: 20px 24px;
+    background: #f7f5fc;
+  }
+  .group-attach > div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+  }
+  .task-distribution {
+    display: grid;
+    grid-template-columns: minmax(150px, 1fr) 180px minmax(200px, 1fr);
+    align-items: center;
+    gap: 32px;
+    padding: 24px 32px;
+    margin-bottom: 24px;
+  }
+  .task-distribution-copy > strong {
+    display: block;
+    font-size: 36px;
+    line-height: 1.2;
+    margin: 14px 0 4px;
+    font-weight: 600;
+  }
+  .task-distribution-copy p {
+    font-size: 12px;
+  }
+  .task-distribution-copy small {
+    display: block;
+    margin-top: 9px;
+  }
+  .task-distribution svg {
+    width: 180px;
+    height: 180px;
+  }
+  .task-pie-legend {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 14px;
+  }
+  .task-pie-legend li {
+    display: grid;
+    grid-template-columns: 9px minmax(90px, 1fr) 40px 40px;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+  }
+  .task-pie-legend li > span:first-child {
+    width: 9px;
+    height: 9px;
+    border-radius: 50%;
+  }
+  .task-pie-legend strong,
+  .task-pie-legend small {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+  }
+  ol.task-list {
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .task-rank {
+    color: #8a80a2;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
+  }
+  @media (max-width: 950px) {
+    .task-distribution {
+      gap: 22px;
+      grid-template-columns: 1fr 150px;
+      padding: 24px;
+    }
+    .task-distribution svg {
+      width: 150px;
+      height: 150px;
+    }
+    .task-pie-legend {
+      grid-column: 1 / -1;
+    }
+  }
+  @media (max-width: 650px) {
+    .task-distribution {
+      padding: 20px;
+      grid-template-columns: minmax(0, 1fr) 120px;
+      gap: 14px;
+    }
+    .task-distribution svg {
+      width: 120px;
+      height: 120px;
+    }
+    .group-member-list > div {
+      flex-wrap: wrap;
+      padding: 16px;
+    }
+    .group-members .panel-heading .heading-actions {
+      flex-wrap: wrap;
+    }
+  }
+}
+@layer components {
+  .group-coverage {
+    margin-bottom: 24px;
+  }
+  .group-coverage h2 {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .group-coverage-row {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding: 18px 24px;
+    border-top: 1px solid var(--line);
+    font-size: 12px;
+  }
+  .group-coverage-row > strong {
+    margin-left: auto;
+    font-variant-numeric: tabular-nums;
+  }
+  .group-coverage-help {
+    padding: 0 24px 24px;
+    font-size: 13px;
+  }
+  .group-coverage-editor {
+    border-top: 1px solid var(--line);
+    background: #faf9fd;
+  }
+  .group-coverage-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 10px;
+    padding: 0 24px 24px;
+  }
+}

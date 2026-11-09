@@ -1,0 +1,501 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id           String       @id @default(uuid())
+  email        String       @unique
+  name         String
+  passwordHash String
+  role         String       @default("analyst")
+  clients      UserClient[]
+  sessions     Session[]
+}
+
+model UserClient {
+  userId   String
+  clientId String
+  user     User   @relation(fields: [userId], references: [id])
+  client   Client @relation(fields: [clientId], references: [id])
+
+  @@id([userId, clientId])
+}
+
+model Session {
+  id        String   @id
+  userId    String
+  csrf      String
+  expiresAt DateTime
+  user      User     @relation(fields: [userId], references: [id])
+}
+
+model Client {
+  complianceAssessments ComplianceAssessment[]
+  complianceSwot ComplianceSwot[]
+  id        String           @id @default(uuid())
+  name      String
+  legalName String
+  code      String           @unique
+  sector    String
+  email     String
+  archived  Boolean          @default(false)
+  settings  Json             @default("{}")
+  securityDecisions SecurityDecision[]
+  locations ClientLocation[]
+  users     UserClient[]
+  records   Record[]
+  reports   Report[]
+  contacts  ClientContact[]
+  documents ClientDocument[]
+  createdAt DateTime         @default(now())
+}
+
+model ClientLocation {
+  id String @id @default(uuid())
+  clientId String
+  name String
+  kind String
+  address String @default("")
+  city String @default("")
+  country String @default("")
+  platform String @default("")
+  region String @default("")
+  providerId String?
+  archived Boolean @default(false)
+  version Int @default(1)
+  createdAt DateTime @default(now())
+  client Client @relation(fields: [clientId], references: [id])
+  provider Record? @relation("locationProvider",fields:[providerId,clientId],references:[id,clientId])
+  records Record[] @relation("recordLocation")
+  @@unique([id,clientId])
+  @@unique([clientId,name])
+  @@index([clientId,archived])
+}
+
+model SecurityDecision {
+ id String @id @default(uuid())
+ clientId String
+ ruleId String
+ state String
+ notes String
+ actorId String
+ reviewedAt DateTime @default(now())
+ version Int @default(1)
+ client Client @relation(fields:[clientId],references:[id])
+ @@unique([clientId,ruleId])
+}
+
+model Record {
+  complianceAssessments ComplianceAssessment[] @relation("complianceTask")
+  groupId String?
+  groupSize Int?
+  parentGroup Record? @relation("assetMembers", fields: [groupId, clientId], references: [id, clientId])
+  members Record[] @relation("assetMembers")
+
+  automationKey String?
+
+  assetType String?
+  searchText String @default("")
+
+  locationId String?
+  location ClientLocation? @relation("recordLocation", fields:[locationId,clientId],references:[id,clientId])
+  suppliedLocations ClientLocation[] @relation("locationProvider")
+
+  riskDefinitionId String?
+  riskDefinition RiskDefinition? @relation(fields:[riskDefinitionId],references:[id])
+  id                 String              @id @default(uuid())
+  clientId           String
+  kind               String
+  title              String
+  status             String
+  severity           String              @default("medium")
+  owner              String              @default("")
+  dueAt              DateTime?
+  data               Json                @default("{}")
+  archived           Boolean             @default(false)
+  code               String?
+  version            Int                 @default(1)
+  createdAt          DateTime            @default(now())
+  updatedAt          DateTime            @updatedAt
+  client             Client              @relation(fields: [clientId], references: [id])
+  accounts           Account[]
+  grants             AccessGrant[]
+  providerAccesses   ProviderAccess[]    @relation("providerAccess")
+  thirdPartyAccesses ProviderAccess[]    @relation("providerTarget")
+  deployments        ControlDeployment[] @relation("controlDeployment")
+  protectedBy        ControlDeployment[] @relation("protectedAsset")
+  interfaces         NetworkInterface[]  @relation("networkInterfaces")
+  assetInterfaces    NetworkInterface[]  @relation("assetInterfaces")
+  sourceLinks        NetworkLink[]       @relation("sourceNetwork")
+  targetLinks        NetworkLink[]       @relation("targetNetwork")
+  vlan               Vlan?
+  responsibilities   Responsibility[]
+  communications     ReportItem[]
+  attachments        Attachment[]
+  comments           Comment[]
+  outgoing           RecordRelation[]    @relation("fromRecord")
+  incoming           RecordRelation[]    @relation("toRecord")
+  assessments        RiskAssessment[]
+
+  @@unique([clientId,kind,automationKey])
+  @@unique([id, clientId])
+  @@unique([clientId, kind, code])
+  @@index([clientId, groupId])
+  @@index([clientId, kind, status])
+  @@index([clientId, dueAt])
+  @@index([clientId, locationId])
+  @@index([clientId, kind, assetType, archived])
+  @@index([searchText(ops: raw("gin_trgm_ops"))], type: Gin, map: "Record_searchText_trgm_idx")
+}
+
+model AuditLog {
+  id        String   @id @default(uuid())
+  actorId   String
+  clientId  String?
+  entityId  String
+  action    String
+  before    Json?
+  after     Json?
+  createdAt DateTime @default(now())
+
+  @@index([clientId, createdAt])
+}
+
+model Report {
+  id         String           @id @default(uuid())
+  clientId   String
+  client     Client           @relation(fields: [clientId], references: [id])
+  status     String           @default("draft")
+  content    String
+  snapshot   Json
+  recipients String[]
+  model      String           @default("template-v1")
+  delivery   Json?
+  period     String?
+  createdAt  DateTime         @default(now())
+  sentAt     DateTime?
+  items      ReportItem[]
+  deliveries ReportDelivery[]
+
+  @@unique([id, clientId])
+  @@unique([clientId, period])
+  @@index([clientId, status])
+}
+
+model ClientContact {
+  id       String @id @default(uuid())
+  clientId String
+  name     String
+  role     String
+  email    String
+  phone    String @default("")
+  client   Client @relation(fields: [clientId], references: [id])
+
+  @@index([clientId])
+}
+
+model RecordRelation {
+  clientId String
+  fromId   String
+  toId     String
+  type     String @default("related")
+  from     Record @relation("fromRecord", fields: [fromId, clientId], references: [id, clientId])
+  to       Record @relation("toRecord", fields: [toId, clientId], references: [id, clientId])
+
+  @@id([fromId, toId])
+  @@index([clientId, toId])
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  clientId  String
+  recordId  String
+  name      String
+  mime      String
+  size      Int
+  actorId   String
+  createdAt DateTime @default(now())
+  record    Record   @relation(fields: [recordId, clientId], references: [id, clientId])
+
+  @@index([clientId, recordId])
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  clientId  String
+  recordId  String
+  actorId   String
+  content   String
+  createdAt DateTime @default(now())
+  record    Record   @relation(fields: [recordId, clientId], references: [id, clientId])
+
+  @@index([clientId, recordId])
+}
+
+model RiskAssessment {
+  id                 String   @id @default(uuid())
+  clientId           String
+  recordId           String
+  methodology        String
+  methodologyVersion String
+  valuation          Json
+  actorId            String
+  createdAt          DateTime @default(now())
+  record             Record   @relation(fields: [recordId, clientId], references: [id, clientId])
+
+  @@index([clientId, recordId])
+}
+
+model Notification {
+  id             String    @id @default(uuid())
+  clientId       String
+  entityId       String
+  type           String
+  status         String    @default("pending")
+  createdAt      DateTime  @default(now())
+  acknowledgedAt DateTime?
+
+  @@unique([clientId, entityId, type])
+  @@index([clientId, status])
+}
+
+model Account {
+  archived       Boolean       @default(false)
+  id             String        @id @default(uuid())
+  clientId       String
+  identityId     String
+  name           String
+  platform       String
+  type           String
+  authentication String
+  mfa            String
+  privileges     String        @default("")
+  status         String        @default("active")
+  reviewedAt     DateTime?
+  reviewer       String        @default("")
+  identity       Record        @relation(fields: [identityId, clientId], references: [id, clientId])
+  grants         AccessGrant[]
+
+  @@unique([id, clientId])
+  @@index([clientId, identityId, status])
+}
+
+model AccessGrant {
+  archived     Boolean   @default(false)
+  id           String    @id @default(uuid())
+  clientId     String
+  identityId   String
+  accountId    String
+  system       String
+  role         String
+  privileges   String
+  status       String    @default("review")
+  authorizedAt DateTime?
+  reviewedAt   DateTime?
+  expiresAt    DateTime?
+  reviewer     String    @default("")
+  account      Account   @relation(fields: [accountId, clientId], references: [id, clientId])
+  identity     Record    @relation(fields: [identityId, clientId], references: [id, clientId])
+
+  @@index([clientId, identityId, status])
+}
+
+model ProviderAccess {
+  archived       Boolean   @default(false)
+  id             String    @id @default(uuid())
+  clientId       String
+  providerId     String
+  assetId        String?
+  system         String
+  authentication String
+  mfa            String
+  privileges     String
+  status         String    @default("review")
+  authorizedAt   DateTime?
+  reviewedAt     DateTime?
+  expiresAt      DateTime?
+  reviewer       String    @default("")
+  provider       Record    @relation("providerAccess", fields: [providerId, clientId], references: [id, clientId])
+  asset          Record?   @relation("providerTarget", fields: [assetId, clientId], references: [id, clientId])
+
+  @@index([clientId, providerId, status])
+}
+
+model ControlDeployment {
+  coveredCount Int?
+  archived  Boolean   @default(false)
+  id        String    @id @default(uuid())
+  clientId  String
+  controlId String
+  assetId   String
+  status    String
+  effective Boolean   @default(false)
+  checkedAt DateTime?
+  notes     String    @default("")
+  control   Record    @relation("controlDeployment", fields: [controlId, clientId], references: [id, clientId])
+  asset     Record    @relation("protectedAsset", fields: [assetId, clientId], references: [id, clientId])
+
+  @@unique([controlId, assetId])
+  @@index([clientId, effective])
+}
+
+model NetworkInterface {
+  archived  Boolean @default(false)
+  id        String  @id @default(uuid())
+  clientId  String
+  networkId String
+  assetId   String
+  name      String
+  address   String
+  notes     String  @default("")
+  network   Record  @relation("networkInterfaces", fields: [networkId, clientId], references: [id, clientId])
+  asset     Record  @relation("assetInterfaces", fields: [assetId, clientId], references: [id, clientId])
+
+  @@unique([networkId, address])
+  @@index([clientId, assetId])
+}
+
+model NetworkLink {
+  archived        Boolean @default(false)
+  id              String  @id @default(uuid())
+  clientId        String
+  sourceNetworkId String
+  targetNetworkId String
+  type            String
+  description     String  @default("")
+  source          Record  @relation("sourceNetwork", fields: [sourceNetworkId, clientId], references: [id, clientId])
+  target          Record  @relation("targetNetwork", fields: [targetNetworkId, clientId], references: [id, clientId])
+
+  @@index([clientId, sourceNetworkId])
+}
+
+model Vlan {
+  id          String @id @default(uuid())
+  clientId    String
+  networkId   String @unique
+  vlanId      Int
+  name        String
+  description String @default("")
+  network     Record @relation(fields: [networkId, clientId], references: [id, clientId])
+
+  @@unique([networkId, clientId])
+  @@index([clientId, vlanId])
+}
+
+model Responsibility {
+  archived     Boolean @default(false)
+  id           String  @id @default(uuid())
+  clientId     String
+  providerId   String
+  activity     String
+  organization String
+  assignment   String
+  notes        String  @default("")
+  provider     Record  @relation(fields: [providerId, clientId], references: [id, clientId])
+
+  @@index([clientId, providerId])
+}
+
+model ClientDocument {
+  archived Boolean @default(false)
+  id       String  @id @default(uuid())
+  clientId String
+  title    String
+  url      String
+  notes    String  @default("")
+  client   Client  @relation(fields: [clientId], references: [id])
+
+  @@index([clientId])
+}
+
+model ReportItem {
+  id             String    @id @default(uuid())
+  clientId       String
+  reportId       String
+  recordId       String
+  snapshot       Json
+  communicatedAt DateTime?
+  report         Report    @relation(fields: [reportId, clientId], references: [id, clientId])
+  record         Record    @relation(fields: [recordId, clientId], references: [id, clientId])
+
+  @@unique([reportId, recordId])
+  @@index([clientId, recordId, communicatedAt])
+}
+
+model ReportDelivery {
+  id          String   @id @default(uuid())
+  clientId    String
+  reportId    String
+  status      String
+  recipients  String[]
+  response    Json?
+  attemptedAt DateTime @default(now())
+  report      Report   @relation(fields: [reportId, clientId], references: [id, clientId])
+
+  @@index([clientId, reportId])
+}
+
+model RiskDefinition {
+ id String @id @default(uuid())
+ code String @unique
+ title String
+ category String
+ description String
+ threat String
+ impact String
+ dimensions String[]
+ methodology String
+ methodologyVersion String
+ referenceUrl String @default("")
+ suggestedControls String[]
+ defaultSeverity String @default("medium")
+ version Int @default(1)
+ archived Boolean @default(false)
+ createdAt DateTime @default(now())
+ updatedAt DateTime @updatedAt
+ evaluations Record[]
+ @@index([archived,category])
+}
+
+model ComplianceAssessment {
+  id String @id @default(uuid())
+  clientId String
+  framework String @default("nis2")
+  requirementId String
+  status String @default("pending")
+  notes String @default("")
+  evidence String @default("")
+  evidenceLinks String[]
+  relatedIds String[]
+  owner String @default("")
+  dueAt DateTime?
+  taskId String?
+  version Int @default(1)
+  reviewedAt DateTime @default(now())
+  reviewerId String
+  client Client @relation(fields: [clientId], references: [id])
+  task Record? @relation("complianceTask", fields: [taskId, clientId], references: [id, clientId])
+  @@unique([clientId, framework, requirementId])
+  @@index([clientId, framework, status])
+}
+
+model ComplianceSwot {
+  id String @id @default(uuid())
+  clientId String
+  framework String @default("nis2")
+  strengths String @default("")
+  weaknesses String @default("")
+  opportunities String @default("")
+  threats String @default("")
+  actions String @default("")
+  version Int @default(1)
+  reviewedAt DateTime @default(now())
+  reviewerId String
+  client Client @relation(fields: [clientId], references: [id])
+  @@unique([clientId, framework])
+}

@@ -1,0 +1,22 @@
+{
+  "name": "mssp-security-manager",
+  "private": true,
+  "workspaces": [
+    "backend",
+    "frontend"
+  ],
+  "scripts": {
+    "build": "npm run build --workspaces",
+    "test": "npm test -w backend",
+    "db:generate": "npm run db:generate -w backend",
+    "dev:api": "npm run dev -w backend",
+    "dev:web": "npm run dev -w frontend",
+    "onboarding": "node --import tsx scripts/onboarding.ts",
+    "onboarding:check": "node --import tsx scripts/onboarding.ts --check"
+  },
+  "overrides": {
+    "deepmerge-ts": "8.0.0",
+    "postcss": "8.5.23",
+    "sharp": "0.35.5"
+  }
+}

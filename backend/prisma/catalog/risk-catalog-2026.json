@@ -1,0 +1,603 @@
+[
+  {
+    "code": "MSSP-ACC-02",
+    "title": "Compromiso de cuentas sin MFA",
+    "category": "Acceso e identidades",
+    "description": "Las cuentas expuestas o privilegiadas no exigen un segundo factor.",
+    "threat": "Robo o reutilización de credenciales de acceso.",
+    "impact": "Suplantación y acceso a servicios corporativos.",
+    "dimensions": [
+      "C",
+      "I",
+      "A",
+      "T"
+    ],
+    "suggestedControls": [
+      "MFA",
+      "Acceso condicional",
+      "Revisión de accesos"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-ACC-03",
+    "title": "Persistencia de accesos de exempleados",
+    "category": "Acceso e identidades",
+    "description": "Se conservan cuentas o sesiones después de finalizar la relación laboral.",
+    "threat": "Uso indebido de accesos no revocados.",
+    "impact": "Acceso no autorizado y pérdida de trazabilidad.",
+    "dimensions": [
+      "C",
+      "I",
+      "A",
+      "T"
+    ],
+    "suggestedControls": [
+      "Baja de identidades",
+      "Revisión de accesos",
+      "Revocación de sesiones"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-ACC-04",
+    "title": "Privilegios excesivos o incompatibles",
+    "category": "Acceso e identidades",
+    "description": "Los permisos concedidos superan las funciones que necesita la persona o servicio.",
+    "threat": "Abuso de privilegios o escalado tras comprometer una cuenta.",
+    "impact": "Alteración de sistemas y exposición de información.",
+    "dimensions": [
+      "C",
+      "I",
+      "A",
+      "T"
+    ],
+    "suggestedControls": [
+      "Mínimo privilegio",
+      "PAM",
+      "Segregación de funciones"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-ACC-05",
+    "title": "Cuentas compartidas sin atribución individual",
+    "category": "Acceso e identidades",
+    "description": "Varias personas operan con una identidad común sin trazabilidad suficiente.",
+    "threat": "Uso de una cuenta compartida sin identificación del operador.",
+    "impact": "Dificultad para investigar acciones y revocar accesos.",
+    "dimensions": [
+      "A",
+      "T",
+      "I"
+    ],
+    "suggestedControls": [
+      "Cuentas nominales",
+      "PAM",
+      "Registro de actividad"
+    ],
+    "defaultSeverity": "medium"
+  },
+  {
+    "code": "MSSP-ACC-06",
+    "title": "Exposición de secretos de aplicaciones",
+    "category": "Acceso e identidades",
+    "description": "Claves y tokens se conservan sin protección o sin rotación.",
+    "threat": "Extracción de secretos desde repositorios o configuraciones.",
+    "impact": "Acceso a datos y servicios con la identidad de la aplicación.",
+    "dimensions": [
+      "C",
+      "I",
+      "A"
+    ],
+    "suggestedControls": [
+      "Gestor de secretos",
+      "Rotación de credenciales",
+      "Identidades de servicio"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-ACC-07",
+    "title": "Acceso remoto insuficientemente restringido",
+    "category": "Acceso e identidades",
+    "description": "Los servicios de administración remota carecen de controles de origen o autenticación reforzada.",
+    "threat": "Fuerza bruta o explotación de accesos remotos publicados.",
+    "impact": "Compromiso de equipos y movimiento hacia sistemas internos.",
+    "dimensions": [
+      "C",
+      "I",
+      "D",
+      "A"
+    ],
+    "suggestedControls": [
+      "MFA",
+      "VPN o ZTNA",
+      "Restricción de administración"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-MAL-02",
+    "title": "Movimiento lateral por falta de segmentación",
+    "category": "Código malicioso",
+    "description": "Los equipos comprometidos pueden alcanzar servicios de otras zonas sin controles adecuados.",
+    "threat": "Propagación desde un activo comprometido.",
+    "impact": "Ampliación del alcance del incidente.",
+    "dimensions": [
+      "C",
+      "I",
+      "D"
+    ],
+    "suggestedControls": [
+      "Segmentación",
+      "Firewall",
+      "EDR"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-MAL-03",
+    "title": "Ejecución de malware en equipos sin EDR",
+    "category": "Código malicioso",
+    "description": "Los equipos no disponen de protección supervisada o su agente no funciona.",
+    "threat": "Ejecución de código malicioso sin detección ni contención.",
+    "impact": "Robo de datos y afectación a servicios corporativos.",
+    "dimensions": [
+      "C",
+      "I",
+      "D"
+    ],
+    "suggestedControls": [
+      "EDR",
+      "Monitorización de agentes",
+      "Control de aplicaciones"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-MAL-04",
+    "title": "Compromiso por phishing y correo malicioso",
+    "category": "Código malicioso",
+    "description": "El filtrado y las medidas sobre enlaces, adjuntos y suplantación son insuficientes.",
+    "threat": "Mensajes fraudulentos con enlaces o archivos maliciosos.",
+    "impact": "Robo de credenciales, fraude y ejecución de malware.",
+    "dimensions": [
+      "C",
+      "I",
+      "A"
+    ],
+    "suggestedControls": [
+      "Filtro de correo",
+      "MFA",
+      "Formación antiphishing"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-MAL-05",
+    "title": "Entrada de código mediante soportes extraíbles",
+    "category": "Código malicioso",
+    "description": "El uso de dispositivos extraíbles no está limitado ni supervisado.",
+    "threat": "Introducción de archivos maliciosos desde medios externos.",
+    "impact": "Compromiso de estaciones y pérdida de información.",
+    "dimensions": [
+      "C",
+      "I",
+      "D"
+    ],
+    "suggestedControls": [
+      "Control de dispositivos",
+      "EDR",
+      "Política de soportes"
+    ],
+    "defaultSeverity": "medium"
+  },
+  {
+    "code": "MSSP-DIS-02",
+    "title": "Fallo de electrónica de red sin alta disponibilidad",
+    "category": "Disponibilidad",
+    "description": "Un elemento crítico de red representa un punto único de fallo.",
+    "threat": "Avería o indisponibilidad del equipo de comunicaciones.",
+    "impact": "Interrupción de conectividad y servicios dependientes.",
+    "dimensions": [
+      "D"
+    ],
+    "suggestedControls": [
+      "Alta disponibilidad",
+      "Redundancia",
+      "Pruebas de conmutación"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-DIS-03",
+    "title": "Denegación de servicio sobre aplicaciones expuestas",
+    "category": "Disponibilidad",
+    "description": "La capacidad o la protección de servicios publicados no limita ataques de saturación.",
+    "threat": "Saturación de recursos o peticiones maliciosas.",
+    "impact": "Interrupción de aplicaciones utilizadas por clientes y personal.",
+    "dimensions": [
+      "D"
+    ],
+    "suggestedControls": [
+      "Protección DDoS",
+      "WAF",
+      "Limitación de peticiones"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-DIS-04",
+    "title": "Agotamiento de capacidad de infraestructura",
+    "category": "Disponibilidad",
+    "description": "El almacenamiento, memoria u otros recursos críticos carecen de previsión o alertas.",
+    "threat": "Crecimiento de consumo sin detección ni ampliación.",
+    "impact": "Parada de sistemas y pérdida de operaciones.",
+    "dimensions": [
+      "D",
+      "I"
+    ],
+    "suggestedControls": [
+      "Monitorización de capacidad",
+      "Alertas",
+      "Planificación de recursos"
+    ],
+    "defaultSeverity": "medium"
+  },
+  {
+    "code": "MSSP-DIS-05",
+    "title": "Dependencia de una única conexión o proveedor cloud",
+    "category": "Disponibilidad",
+    "description": "Los servicios críticos dependen de un único enlace o entorno sin alternativa probada.",
+    "threat": "Caída de conectividad o indisponibilidad del proveedor.",
+    "impact": "Interrupción prolongada de procesos de negocio.",
+    "dimensions": [
+      "D"
+    ],
+    "suggestedControls": [
+      "Enlaces redundantes",
+      "Plan de continuidad",
+      "Arquitectura resiliente"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-INF-02",
+    "title": "Almacenamiento cloud expuesto públicamente",
+    "category": "Información",
+    "description": "Repositorios o contenedores permiten accesos públicos no previstos.",
+    "threat": "Acceso anónimo o externo a información almacenada.",
+    "impact": "Divulgación o alteración de datos.",
+    "dimensions": [
+      "C",
+      "I"
+    ],
+    "suggestedControls": [
+      "Revisión de configuración cloud",
+      "Mínimo privilegio",
+      "Monitorización de exposición"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-INF-03",
+    "title": "Pérdida de equipos sin cifrado de disco",
+    "category": "Información",
+    "description": "Los dispositivos que contienen información no están cifrados.",
+    "threat": "Robo o extravío de portátiles y soportes.",
+    "impact": "Acceso a información almacenada fuera de control.",
+    "dimensions": [
+      "C"
+    ],
+    "suggestedControls": [
+      "Cifrado de disco",
+      "Gestión de dispositivos",
+      "Borrado remoto"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-INF-04",
+    "title": "Exfiltración mediante compartición externa",
+    "category": "Información",
+    "description": "Los enlaces y permisos externos no se restringen ni revisan.",
+    "threat": "Compartición indebida o acceso con enlaces abiertos.",
+    "impact": "Divulgación de información corporativa.",
+    "dimensions": [
+      "C",
+      "T"
+    ],
+    "suggestedControls": [
+      "DLP",
+      "Control de compartición",
+      "Clasificación de información"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-INF-05",
+    "title": "Datos sensibles en entornos de pruebas",
+    "category": "Información",
+    "description": "Se emplean datos reales sin protección equivalente en entornos no productivos.",
+    "threat": "Acceso indebido a conjuntos de datos de desarrollo.",
+    "impact": "Pérdida de confidencialidad de información sensible.",
+    "dimensions": [
+      "C"
+    ],
+    "suggestedControls": [
+      "Anonimización",
+      "Segregación de entornos",
+      "Revisión de accesos"
+    ],
+    "defaultSeverity": "medium"
+  },
+  {
+    "code": "MSSP-INF-06",
+    "title": "Retención o eliminación inadecuada de información",
+    "category": "Información",
+    "description": "Los datos se conservan o destruyen sin criterios documentados.",
+    "threat": "Conservación excesiva o eliminación accidental.",
+    "impact": "Exposición innecesaria o pérdida de información requerida.",
+    "dimensions": [
+      "C",
+      "I",
+      "D"
+    ],
+    "suggestedControls": [
+      "Política de retención",
+      "Borrado seguro",
+      "Backup"
+    ],
+    "defaultSeverity": "medium"
+  },
+  {
+    "code": "MSSP-TER-02",
+    "title": "Accesos privilegiados de proveedores sin revisión",
+    "category": "Terceros",
+    "description": "Los accesos de terceros carecen de caducidad, revisión o supervisión.",
+    "threat": "Uso indebido o compromiso de una cuenta de proveedor.",
+    "impact": "Acceso a sistemas críticos fuera del control operativo.",
+    "dimensions": [
+      "C",
+      "I",
+      "A",
+      "T"
+    ],
+    "suggestedControls": [
+      "PAM",
+      "MFA",
+      "Revisión de accesos de terceros"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-TER-03",
+    "title": "Compromiso de dependencias y cadena de suministro",
+    "category": "Terceros",
+    "description": "Se incorpora software o actualizaciones sin verificar su procedencia.",
+    "threat": "Manipulación de componentes o distribución de código comprometido.",
+    "impact": "Ejecución de código con permisos de aplicaciones confiables.",
+    "dimensions": [
+      "C",
+      "I",
+      "D",
+      "A"
+    ],
+    "suggestedControls": [
+      "Inventario de dependencias",
+      "Verificación de integridad",
+      "Control de actualizaciones"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-TER-04",
+    "title": "Ausencia de responsabilidades de seguridad en servicios externos",
+    "category": "Terceros",
+    "description": "No se definen las obligaciones de operación, respuesta y protección de datos.",
+    "threat": "Incidente sin un responsable de actuación claramente asignado.",
+    "impact": "Retrasos de respuesta y medidas de protección incompletas.",
+    "dimensions": [
+      "C",
+      "I",
+      "D",
+      "T"
+    ],
+    "suggestedControls": [
+      "Matriz RACI",
+      "Revisión de proveedores",
+      "Procedimiento de incidentes"
+    ],
+    "defaultSeverity": "medium"
+  },
+  {
+    "code": "MSSP-TER-05",
+    "title": "Pérdida de servicio por falta de plan de salida",
+    "category": "Terceros",
+    "description": "No existe una alternativa documentada para recuperar datos o cambiar de proveedor.",
+    "threat": "Terminación del servicio o imposibilidad de continuar con el proveedor.",
+    "impact": "Bloqueo operativo y pérdida de acceso a información.",
+    "dimensions": [
+      "D",
+      "I"
+    ],
+    "suggestedControls": [
+      "Plan de salida",
+      "Copias independientes",
+      "Pruebas de recuperación"
+    ],
+    "defaultSeverity": "medium"
+  },
+  {
+    "code": "MSSP-OPS-03",
+    "title": "Explotación de sistemas pendientes de parchear",
+    "category": "Operación",
+    "description": "Los sistemas mantienen vulnerabilidades conocidas sin remediación.",
+    "threat": "Explotación de fallos con corrección disponible.",
+    "impact": "Acceso no autorizado e interrupción de operaciones.",
+    "dimensions": [
+      "C",
+      "I",
+      "D"
+    ],
+    "suggestedControls": [
+      "Gestión de vulnerabilidades",
+      "Parcheado",
+      "Validación del cierre"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-OPS-04",
+    "title": "Servidores sin hardening de seguridad",
+    "category": "Operación",
+    "description": "Los servidores conservan configuraciones, servicios o permisos innecesarios.",
+    "threat": "Abuso de servicios y configuraciones débiles.",
+    "impact": "Ampliación de la superficie de ataque y compromiso de sistemas.",
+    "dimensions": [
+      "C",
+      "I",
+      "D",
+      "A"
+    ],
+    "suggestedControls": [
+      "Hardening",
+      "Revisión de configuración",
+      "Mínimo privilegio"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-OPS-05",
+    "title": "Copias de seguridad expuestas al mismo incidente",
+    "category": "Operación",
+    "description": "Las copias comparten credenciales o accesibilidad con los sistemas protegidos.",
+    "threat": "Cifrado o borrado simultáneo de sistemas y copias.",
+    "impact": "Imposibilidad de recuperar la información.",
+    "dimensions": [
+      "I",
+      "D"
+    ],
+    "suggestedControls": [
+      "Copias inmutables",
+      "Separación de credenciales",
+      "Pruebas de restauración"
+    ],
+    "defaultSeverity": "critical"
+  },
+  {
+    "code": "MSSP-OPS-06",
+    "title": "Respuesta a incidentes sin procedimiento probado",
+    "category": "Operación",
+    "description": "El equipo no dispone de instrucciones, contactos o pruebas de respuesta.",
+    "threat": "Incidente sin coordinación ni contención adecuada.",
+    "impact": "Mayor duración, propagación y coste de recuperación.",
+    "dimensions": [
+      "C",
+      "I",
+      "D",
+      "T"
+    ],
+    "suggestedControls": [
+      "Plan de respuesta",
+      "Simulacros",
+      "Gestión de evidencias"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-OPS-07",
+    "title": "Registro y monitorización insuficientes",
+    "category": "Operación",
+    "description": "No se recogen o revisan eventos relevantes de seguridad.",
+    "threat": "Actividad maliciosa o anómala que no se detecta a tiempo.",
+    "impact": "Incidentes prolongados y dificultad de investigación.",
+    "dimensions": [
+      "T",
+      "I",
+      "D"
+    ],
+    "suggestedControls": [
+      "SIEM",
+      "Centralización de registros",
+      "Alertas de seguridad"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-OPS-08",
+    "title": "Componentes obsoletos o fuera de soporte",
+    "category": "Operación",
+    "description": "Se mantienen activos sin actualizaciones o soporte de seguridad.",
+    "threat": "Explotación de vulnerabilidades sin corrección del fabricante.",
+    "impact": "Compromiso persistente y dificultad de recuperación.",
+    "dimensions": [
+      "C",
+      "I",
+      "D"
+    ],
+    "suggestedControls": [
+      "Plan de renovación",
+      "Inventario de ciclo de vida",
+      "Aislamiento de sistemas"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-FIS-02",
+    "title": "Acceso físico no autorizado a zonas técnicas",
+    "category": "Entorno físico",
+    "description": "Los equipos y armarios de comunicaciones no están protegidos frente al acceso indebido.",
+    "threat": "Manipulación, conexión o retirada de equipos.",
+    "impact": "Compromiso de infraestructura y exposición de información.",
+    "dimensions": [
+      "C",
+      "I",
+      "D",
+      "A"
+    ],
+    "suggestedControls": [
+      "Control de acceso físico",
+      "CCTV",
+      "Protección de armarios"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-FIS-03",
+    "title": "Interrupción eléctrica sin autonomía suficiente",
+    "category": "Entorno físico",
+    "description": "Los servicios críticos no disponen de protección o autonomía eléctrica comprobada.",
+    "threat": "Corte o variaciones del suministro eléctrico.",
+    "impact": "Parada de equipos y posible corrupción de datos.",
+    "dimensions": [
+      "D",
+      "I"
+    ],
+    "suggestedControls": [
+      "SAI",
+      "Pruebas de autonomía",
+      "Apagado controlado"
+    ],
+    "defaultSeverity": "high"
+  },
+  {
+    "code": "MSSP-FIS-04",
+    "title": "Daño por condiciones ambientales no supervisadas",
+    "category": "Entorno físico",
+    "description": "Las zonas técnicas carecen de control de temperatura o detección de agua.",
+    "threat": "Sobrecalentamiento o incidente ambiental sin detección temprana.",
+    "impact": "Avería de equipos e interrupción de servicios.",
+    "dimensions": [
+      "D",
+      "I"
+    ],
+    "suggestedControls": [
+      "Sensores ambientales",
+      "Alertas",
+      "Plan de continuidad"
+    ],
+    "defaultSeverity": "medium"
+  }
+]

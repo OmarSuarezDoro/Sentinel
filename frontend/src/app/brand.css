@@ -1,0 +1,25 @@
+/**
+ * @file: brand.css
+ * @description: Integración del símbolo de Sentinel en la navegación y el acceso
+ * @author: omar.suarez@alturanetgroup.com
+ * @version: 1.0.0
+ * Copyright (c) 2026 Alturanet Group S.L. Todos los derechos reservados.
+ * Queda prohibida la reproducción total o parcial sin autorización previa.
+ */
+@layer components {
+  .sentinel-mark {
+    display: block;
+    object-fit: contain;
+    flex-shrink: 0;
+  }
+  .brand-icon.sentinel-brand-icon {
+    background: transparent;
+    padding: 0;
+    border-radius: 0;
+  }
+  .login-story .sentinel-mark {
+    background: white;
+    border-radius: 9px;
+    padding: 4px;
+  }
+}

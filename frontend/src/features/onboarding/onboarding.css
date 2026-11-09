@@ -1,0 +1,368 @@
+/**
+ * @file: onboarding.css
+ * @description: Estilos del asistente de instalación y personalización de tenants
+ * @author: omar.suarez@alturanetgroup.com
+ * @version: 1.0.0
+ * Copyright (c) 2026 Alturanet Group S.L. Todos los derechos reservados.
+ * Queda prohibida la reproducción total o parcial sin autorización previa.
+ */
+.onboarding-install {
+  min-height: 100dvh;
+  display: grid;
+  grid-template-columns: minmax(300px, 0.85fr) minmax(0, 1.15fr);
+  background: #fff;
+  color: #25283f;
+}
+.onboarding-intro {
+  padding: clamp(28px, 6vw, 90px);
+  background: #f0eefb;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 25px;
+}
+.onboarding-intro h1 {
+  font-size: clamp(30px, 3vw, 46px);
+  line-height: 1.18;
+  max-width: 14ch;
+  letter-spacing: -1.5px;
+}
+.onboarding-intro p {
+  max-width: 47ch;
+  line-height: 1.7;
+}
+.onboarding-intro ol {
+  padding-left: 22px;
+  display: grid;
+  gap: 16px;
+  font-weight: 600;
+}
+.onboarding-private {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 30px;
+}
+.onboarding-private svg {
+  flex-shrink: 0;
+  color: #6250d9;
+}
+.onboarding-install-main {
+  padding: clamp(24px, 5vw, 75px);
+  width: 100%;
+  max-width: 860px;
+  align-self: center;
+  min-width: 0;
+}
+.onboarding-install-heading,
+.onboarding-configuration header,
+.onboarding-tenant header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  margin-bottom: 22px;
+}
+.onboarding-install-heading h2 {
+  font-size: 24px;
+}
+.onboarding-checks {
+  border-block: 1px solid #e6e8f1;
+  margin: 24px 0;
+}
+.onboarding-checks > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 15px;
+  padding: 14px 0;
+  font-size: 13px;
+}
+.onboarding-checks strong {
+  font-weight: 600;
+}
+.onboarding-form {
+  display: grid;
+  gap: 18px;
+  min-width: 0;
+}
+.onboarding-form h3,
+.onboarding-help h3,
+.onboarding-preview h3 {
+  font-size: 17px;
+  color: #25283f;
+  margin: 0;
+}
+.onboarding-form p,
+.onboarding-help p,
+.onboarding-preview p {
+  line-height: 1.7;
+  margin: 0;
+  max-width: 65ch;
+  overflow-wrap: anywhere;
+}
+.onboarding-form label,
+.onboarding-client-picker {
+  display: grid;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #444961;
+}
+.onboarding-form input,
+.onboarding-form textarea,
+.onboarding-client-picker select {
+  width: 100%;
+  padding: 11px 12px;
+  border: 1px solid #dcdfea;
+  border-radius: 8px;
+  background: white;
+  color: #25283f;
+  min-width: 0;
+}
+.onboarding-form input:focus-visible,
+.onboarding-form textarea:focus-visible {
+  outline: 2px solid #6250d9;
+  outline-offset: 2px;
+}
+.onboarding-form input[type="color"] {
+  width: 80px;
+  height: 44px;
+  padding: 5px;
+  cursor: pointer;
+}
+.onboarding-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  min-width: 0;
+}
+.onboarding-form button {
+  justify-self: start;
+}
+.onboarding-help,
+.onboarding-success {
+  display: grid;
+  gap: 20px;
+}
+.onboarding-help > svg {
+  color: #a56716;
+}
+.onboarding-help pre {
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  background: #f4f5fa;
+  border: 1px solid #e6e8f1;
+  border-radius: 8px;
+  padding: 18px;
+  line-height: 1.9;
+  font-size: 12px;
+}
+.onboarding-panel {
+  display: grid;
+  gap: 24px;
+}
+.onboarding-configuration,
+.onboarding-tenant {
+  padding: 26px;
+  min-width: 0;
+}
+.onboarding-configuration header p,
+.onboarding-tenant header p {
+  margin-top: 8px;
+  line-height: 1.6;
+}
+.onboarding-configuration details {
+  border-top: 1px solid #e6e8f1;
+  padding-top: 18px;
+}
+.onboarding-configuration summary {
+  cursor: pointer;
+  color: #4b43a9;
+  font-weight: 600;
+  font-size: 13px;
+}
+.onboarding-configuration details > p {
+  margin-top: 20px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+.onboarding-diagnostics {
+  list-style: none;
+  padding: 0;
+  margin: 18px 0 0;
+}
+.onboarding-diagnostics li {
+  display: grid;
+  grid-template-columns: 210px minmax(0, 1fr) 20px;
+  gap: 15px;
+  border-bottom: 1px solid #edf0f6;
+  padding: 13px 0;
+  align-items: center;
+  font-size: 12px;
+}
+.onboarding-diagnostics code {
+  overflow-wrap: anywhere;
+  color: #25283f;
+}
+.onboarding-diagnostics li.ready svg {
+  color: #387561;
+}
+.onboarding-diagnostics li.warning svg {
+  color: #93631c;
+}
+.onboarding-diagnostics li.error svg {
+  color: #b34353;
+}
+.onboarding-diagnostics li.error {
+  background: transparent;
+  color: #b34353;
+}
+.onboarding-client-picker {
+  max-width: 500px;
+  margin-bottom: 30px;
+}
+.onboarding-tenant-layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(260px, 0.8fr);
+  gap: 40px;
+  align-items: start;
+}
+.onboarding-preview {
+  border-left: 1px solid #e6e8f1;
+  padding-left: 30px;
+  min-width: 0;
+  display: grid;
+  gap: 25px;
+}
+.onboarding-preview-identity {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+  min-width: 0;
+}
+.onboarding-preview-identity > span {
+  border: 3px solid #6250d9;
+  border-radius: 12px;
+  min-width: 56px;
+  min-height: 56px;
+  display: grid;
+  place-items: center;
+  font-weight: 650;
+  padding: 4px;
+  color: #25283f !important;
+}
+.onboarding-preview-identity > div {
+  min-width: 0;
+  overflow-wrap: anywhere;
+  display: grid;
+  gap: 5px;
+}
+.onboarding-next {
+  display: grid;
+  gap: 12px;
+  padding-top: 10px;
+}
+.onboarding-next button {
+  justify-content: space-between;
+  width: 100%;
+  text-align: left;
+  white-space: normal;
+}
+.onboarding-completed,
+.onboarding-saved {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #387561;
+  line-height: 1.5;
+}
+.onboarding-saved {
+  padding: 15px;
+  background: #edf7f2;
+  border-radius: 8px;
+}
+.tenant-welcome {
+  border-left: 4px solid #6250d9;
+  padding: 15px 20px;
+  margin-bottom: 24px;
+  background: white;
+  border-radius: 0 8px 8px 0;
+  overflow-wrap: anywhere;
+}
+.tenant-welcome p {
+  margin: 8px 0;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+@media (max-width: 1000px) {
+  .onboarding-tenant-layout {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .onboarding-preview {
+    border-left: 0;
+    border-top: 1px solid #e6e8f1;
+    padding: 24px 0 0;
+  }
+  .onboarding-diagnostics li {
+    grid-template-columns: 180px minmax(0, 1fr) 20px;
+  }
+  .onboarding-install {
+    grid-template-columns: 1fr;
+  }
+  .onboarding-intro {
+    padding: 30px;
+  }
+  .onboarding-intro h1 {
+    max-width: 25ch;
+  }
+  .onboarding-intro ol {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 14px 30px;
+    padding-left: 20px;
+  }
+  .onboarding-private {
+    margin-top: 0;
+  }
+  .onboarding-install-main {
+    max-width: none;
+  }
+}
+@media (max-width: 600px) {
+  .onboarding-fields {
+    grid-template-columns: 1fr;
+  }
+  .onboarding-configuration,
+  .onboarding-tenant {
+    padding: 18px;
+  }
+  .onboarding-diagnostics li {
+    grid-template-columns: minmax(0, 1fr) 20px;
+    gap: 8px;
+  }
+  .onboarding-diagnostics li > span {
+    grid-column: 1;
+    grid-row: 2;
+  }
+  .onboarding-diagnostics li > svg {
+    grid-column: 2;
+    grid-row: 1;
+  }
+  .onboarding-install-heading h2 {
+    font-size: 21px;
+  }
+  .onboarding-intro {
+    gap: 18px;
+  }
+  .onboarding-intro h1 {
+    font-size: 30px;
+  }
+  .onboarding-intro ol {
+    display: grid;
+  }
+  .onboarding-install-main {
+    padding: 25px 20px;
+  }
+}
